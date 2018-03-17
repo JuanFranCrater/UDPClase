@@ -10,13 +10,14 @@ import java.net.UnknownHostException;
 public class SerEspejo {
 	
 	private static final String IPEspejo = "0.0.0.0";
-
-	DatagramSocket socket;
 	
 	public static int PUERTO = 8000;
+	public static String reverse(String s) {
+		   return new StringBuilder(s).reverse().toString();
+		}
 	
-	public SerEspejo() {
-		
+	public static void main(String[] args) {
+		DatagramSocket socket = null;
 		try {
 			socket = new DatagramSocket(PUERTO, InetAddress.getByName(IPEspejo));	
 			System.out.println("Emisor conectado al socket: "+socket.getLocalAddress());
@@ -26,8 +27,7 @@ public class SerEspejo {
 				byte[] contenido = dato.getData();
 				String s1 = new String(contenido);
 				System.out.println("Mensaje:"+s1);
-				System.out.println(new StringBuilder(s1).reverse().toString());
-				s1="mensajeAlterado";
+				s1=reverse(s1);
 				byte[] contenidoAlterado=s1.getBytes();
 				DatagramPacket datoReves = new DatagramPacket(contenidoAlterado, contenidoAlterado.length, dato.getSocketAddress());
 				socket.send(datoReves);
@@ -43,13 +43,6 @@ public class SerEspejo {
 				socket.close();
 			}
 		}
-	}
-	public static String reverse(String s) {
-		   return new StringBuilder(s).reverse().toString();
-		}
-	
-	public static void main(String[] args) {
-		new SerEspejo();
 	}
 	
 }
