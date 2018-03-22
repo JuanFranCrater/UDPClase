@@ -39,7 +39,7 @@ public class SerEspejo {
 				for(int i=0; i<myList.size();i++)
 					s2+=myList.get(i);
 				
-				
+				s2=s2.toUpperCase();
 				byte[] contenidoAlterado=s2.getBytes();
 				DatagramPacket datoReves = new DatagramPacket(contenidoAlterado, contenidoAlterado.length, dato.getSocketAddress());
 				socket.send(datoReves);
