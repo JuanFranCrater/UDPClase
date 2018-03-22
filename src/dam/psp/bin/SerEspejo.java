@@ -11,14 +11,16 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import sun.java2d.SunGraphics2D;
 
 public class SerEspejo {
 	
 	private static final String IPEspejo = "0.0.0.0";
 	
 	public static int PUERTO = 8000;
+<<<<<<< HEAD:src/dam/psp/bin/SerEspejo.java
 
+=======
+>>>>>>> cec50d14b56ea6f810fb29082ec360cd523e4422:src/dam/psp/SerEspejo.java
 	public static String reverse(String s) {
 		   return new StringBuilder(s).reverse().toString(); //No funciona
 		}
@@ -34,6 +36,7 @@ public class SerEspejo {
 				byte[] contenido = dato.getData();
 				String s1 = new String(contenido);
 				System.out.println("Mensaje:"+s1);
+<<<<<<< HEAD:src/dam/psp/bin/SerEspejo.java
 				System.out.println("Longitud: "+dato.getLength());
 				String mensaje=new String(dato.getData(), 0, dato.getLength());
 				mensaje=new StringBuilder(mensaje).reverse().toString().toUpperCase();
@@ -41,6 +44,19 @@ public class SerEspejo {
 				System.out.println(mensaje.length());
 			
 				DatagramPacket datoReves = new DatagramPacket(mensaje.getBytes(), dato.getLength(), dato.getSocketAddress());
+=======
+				
+				
+				List<String> myList = new ArrayList<String>(Arrays.asList(s1.split("")));
+				Collections.sort(myList, Collections.reverseOrder());
+				String s2 = "";
+				for(int i=0; i<myList.size();i++)
+					s2+=myList.get(i);
+				
+				s2=s2.toUpperCase();
+				byte[] contenidoAlterado=s2.getBytes();
+				DatagramPacket datoReves = new DatagramPacket(contenidoAlterado, contenidoAlterado.length, dato.getSocketAddress());
+>>>>>>> cec50d14b56ea6f810fb29082ec360cd523e4422:src/dam/psp/SerEspejo.java
 				socket.send(datoReves);
 			}
 		} catch (SocketException e) {
