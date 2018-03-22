@@ -6,6 +6,10 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 public class SerEspejo {
 	
@@ -13,7 +17,7 @@ public class SerEspejo {
 	
 	public static int PUERTO = 8000;
 	public static String reverse(String s) {
-		   return new StringBuilder(s).reverse().toString();
+		   return new StringBuilder(s).reverse().toString(); //No funciona
 		}
 	
 	public static void main(String[] args) {
@@ -27,8 +31,16 @@ public class SerEspejo {
 				byte[] contenido = dato.getData();
 				String s1 = new String(contenido);
 				System.out.println("Mensaje:"+s1);
-				s1=reverse(s1);
-				byte[] contenidoAlterado=s1.getBytes();
+				
+				
+				List<String> myList = new ArrayList<String>(Arrays.asList(s1.split("")));
+				Collections.sort(myList, Collections.reverseOrder());
+				String s2 = "";
+				for(int i=0; i<myList.size();i++)
+					s2+=myList.get(i);
+				
+				
+				byte[] contenidoAlterado=s2.getBytes();
 				DatagramPacket datoReves = new DatagramPacket(contenidoAlterado, contenidoAlterado.length, dato.getSocketAddress());
 				socket.send(datoReves);
 			}
