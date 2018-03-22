@@ -1,4 +1,4 @@
-package dam.psp;
+package dam.psp.bin;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -11,7 +11,7 @@ import java.net.UnknownHostException;
 
 
 public class CliEspejo {
-	public static final int PuertoEmisor = 5555;
+	public static final int PuertoEmisor = 8501;
 	public static final int PuertoReceptor = 8000;
 	public static final String IPEmisor = "0.0.0.0";
 	byte[] contenidoEnvio = new byte[144];

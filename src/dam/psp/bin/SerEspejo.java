@@ -1,4 +1,4 @@
-package dam.psp;
+package dam.psp.bin;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
@@ -6,17 +6,25 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
+import sun.java2d.SunGraphics2D;
 
 public class SerEspejo {
 	
 	private static final String IPEspejo = "0.0.0.0";
-
-	DatagramSocket socket;
 	
 	public static int PUERTO = 8000;
+
+	public static String reverse(String s) {
+		   return new StringBuilder(s).reverse().toString(); //No funciona
+		}
 	
-	public SerEspejo() {
-		
+	public static void main(String[] args) {
+		DatagramSocket socket = null;
 		try {
 			socket = new DatagramSocket(PUERTO, InetAddress.getByName(IPEspejo));	
 			System.out.println("Emisor conectado al socket: "+socket.getLocalAddress());
@@ -26,10 +34,13 @@ public class SerEspejo {
 				byte[] contenido = dato.getData();
 				String s1 = new String(contenido);
 				System.out.println("Mensaje:"+s1);
-				System.out.println(new StringBuilder(s1).reverse().toString());
-				s1="mensajeAlterado";
-				byte[] contenidoAlterado=s1.getBytes();
-				DatagramPacket datoReves = new DatagramPacket(contenidoAlterado, contenidoAlterado.length, dato.getSocketAddress());
+				System.out.println("Longitud: "+dato.getLength());
+				String mensaje=new String(dato.getData(), 0, dato.getLength());
+				mensaje=new StringBuilder(mensaje).reverse().toString().toUpperCase();
+				System.out.println(mensaje);
+				System.out.println(mensaje.length());
+			
+				DatagramPacket datoReves = new DatagramPacket(mensaje.getBytes(), dato.getLength(), dato.getSocketAddress());
 				socket.send(datoReves);
 			}
 		} catch (SocketException e) {
@@ -43,13 +54,6 @@ public class SerEspejo {
 				socket.close();
 			}
 		}
-	}
-	public static String reverse(String s) {
-		   return new StringBuilder(s).reverse().toString();
-		}
-	
-	public static void main(String[] args) {
-		new SerEspejo();
 	}
 	
 }
